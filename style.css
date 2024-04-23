@@ -150,3 +150,12 @@ body {
   color: #f5c519;
   background-color: rgb(56, 56, 56);
 }
+
+.search-results-container {
+  width: 10rem;
+  height: 10rem;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+}

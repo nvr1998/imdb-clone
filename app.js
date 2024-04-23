@@ -24,6 +24,26 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const reference = document.querySelector(".search-bar");
+  const absoluteDiv = document.querySelector(".search-results-container");
+
+  const matchSizeAndPosition = () => {
+    const rect = reference.getBoundingClientRect();
+
+    absoluteDiv.style.width = `${rect.width}px`;
+    absoluteDiv.style.height = `${rect.height}px`;
+
+    absoluteDiv.style.top = `${rect.top + 55}px`;
+    absoluteDiv.style.left = `${rect.left}px`;
+  };
+
+  matchSizeAndPosition(); // Run on initial load
+
+  // Optional: Re-run when the window is resized or scrolled
+  window.addEventListener("resize", matchSizeAndPosition);
+});
+
 function CategoryOptionSelected(option) {
   const selected_option = document.getElementById("selected-option");
   var activateOptionDiv = document.querySelector(".category-menu-items");
