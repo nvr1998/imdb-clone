@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-bar">
+        <div class="logo">
+          <img src="logo.png" alt="" />
+        </div>
+        <div class="search-bar">
+          <div id="category-options-button">
+            <span id="selected-option" style="white-space: nowrap">All</span>
+            <div class="material-icon-parent">
+              <span class="material-symbols-rounded"> arrow_drop_down </span>
+            </div>
+          </div>
+          <input
+            type="text"
+            id="search-box"
+            autocomplete="off"
+            placeholder="Search By Movie, TV Show or Episode"
+          />
+          <button id="search-btn">
+            <div class="material-icon-parent">
+              <span class="material-symbols-rounded" style="font-size: 1.7rem">
+                search
+              </span>
+            </div>
+          </button>
+        </div>
+        <div class="my-fav-container">
+          <button
+            id="my-fav-btn"
+            style="display: flex; align-items: center; gap: 0.5rem"
+          >
+            <div class="material-icon-parent">
+              <span class="material-symbols-rounded"> favorite </span>
+            </div>
+            My Favourites
+          </button>
+        </div>
+        <div class="category-menu-items">
+          <div class="category-options">
+            <div class="category-option" onclick="CategoryOptionSelected(0)">
+              <div class="category-option-data">
+                <span class="material-symbols-rounded"> search </span>
+              </div>
+              <div class="category-option-data">All</div>
+            </div>
+            <div class="category-option" onclick="CategoryOptionSelected(1)">
+              <div class="category-option-data">
+                <span class="material-symbols-rounded"> movie </span>
+              </div>
+              <div class="category-option-data">Movies</div>
+            </div>
+            <div class="category-option" onclick="CategoryOptionSelected(2)">
+              <div class="category-option-data">
+                <span class="material-symbols-rounded"> live_tv </span>
+              </div>
+              <div class="category-option-data">Tv Shows</div>
+            </div>
+            <div class="category-option" onclick="CategoryOptionSelected(3)">
+              <div class="category-option-data">
+                <span class="material-symbols-rounded"> video_library </span>
+              </div>
+              <div class="category-option-data">Episodes</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <script src="app.js"></script>
+  </body>
+</html>
