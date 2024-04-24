@@ -141,14 +141,18 @@ function LoadResults(titles) {
       result["Title"],
       result["Year"],
       result["Type"],
-      result["Poster"]
+      result["Poster"],
+      result["imdbID"]
     );
   }
 }
 
-function LoadResult(title, years, genre, img_src) {
+function LoadResult(title, years, genre, img_src, imdbID) {
+  if (img_src.includes("N/A")) {
+    img_src = "";
+  }
   const results = document.querySelector(".results");
-  const result = ` <div class="search-result-container">
+  const result = ` <div data-id="${imdbID}" onclick="LoadTitlePage(this)" class="search-result-container">
   <div class="result-img">
     <img src="${img_src}" alt="" />
   </div>
@@ -218,4 +222,36 @@ function ToggleFavButton(target) {
     target.textContent = "favorite_border";
     target.style.color = "grey";
   }
+}
+
+function LoadTitlePage(target) {
+  const search_box = document.getElementById("search-box");
+  const search_results_container = document.querySelector(
+    ".search-results-container"
+  );
+  search_box.value = "";
+  search_results_container.style.display = "none";
+
+  console.log(`Loading Page With Title ${target.dataset.id}`);
+  LoadMovieDetails(target.dataset.id);
+}
+
+function LoadMovieDetails(imdbID) {
+  const testParams = {
+    i: imdbID,
+  };
+
+  const queryString = new URLSearchParams(testParams).toString();
+  const final_url = api_url_data + `${api_key}&${queryString}`;
+
+  fetch(final_url)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    })
+    .then((data) => {
+      console.log(data);
+    })
+    .catch((err) => {});
 }
