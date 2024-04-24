@@ -1,11 +1,9 @@
 const api_url_data = "http://www.omdbapi.com/?apikey=";
 const api_key = "18aa86a";
 
-let loadedSearchNames = [];
-
 document.addEventListener("DOMContentLoaded", function () {
-  var hoverDiv = document.querySelector("#category-options-button"); // The div you hover over
-  var activateDiv = document.querySelector(".category-menu-items"); // The div to activate
+  const hoverDiv = document.querySelector("#category-options-button"); // The div you hover over
+  const activateDiv = document.querySelector(".category-menu-items"); // The div to activate
 
   hoverDiv.addEventListener("mouseenter", function () {
     activateDiv.style.display = "block";
@@ -63,7 +61,6 @@ function CategoryOptionSelected(option) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  console.log("DOM LOADED");
   const searchBox = document.getElementById("search-box");
   searchBox.addEventListener("input", (event) => {
     let matchingResults = ReturnAllMatchingSearches(event.target.value);
@@ -84,7 +81,10 @@ function FetchData(serchval) {
   controller = new AbortController();
   const signal = controller.signal;
 
-  const searchIndicator = document.getElementById("search-indicator");
+  const results = document.querySelector(".results");
+  results.innerHTML = "";
+  const searchIndicator = document.querySelector(".initial-loading-indicator");
+  searchIndicator.style.display = "flex";
 
   const testParams = {
     s: serchval,
@@ -92,7 +92,7 @@ function FetchData(serchval) {
 
   const queryString = new URLSearchParams(testParams).toString();
   const final_url = api_url_data + `${api_key}&${queryString}`;
-  searchIndicator.innerText = "Searching";
+
   fetch(final_url, { signal })
     .then((res) => {
       if (res.ok) {
@@ -100,31 +100,29 @@ function FetchData(serchval) {
       }
     })
     .then((data) => {
-      searchIndicator.innerText = "Searching Complete";
-      UpdateResults(data);
+      if (data["Response"] === "True") {
+        searchIndicator.style.display = "none";
+        UpdateResults(data);
+      }
     })
-    .catch((err) => {
-      searchIndicator.innerText = "";
-      console.log(err);
-    });
+    .catch((err) => {});
 }
 
+let loadedSearchResults = new Map();
+
 function UpdateResults(data) {
-  const results = document.getElementById("results");
-  loadedSearchNames = [];
-  results.innerText = "";
+  loadedSearchResults.clear();
   if (data["Response"] === "True") {
     const searchArray = data["Search"];
     for (let result of searchArray) {
-      loadedSearchNames.push(result["Title"]);
-      const listItem = `<li>${result["Title"]}</li>`;
-      results.insertAdjacentHTML("beforeend", listItem);
+      loadedSearchResults.set(result["Title"], result);
     }
   }
+  LoadResults(Array.from(loadedSearchResults.keys()));
 }
 function ReturnAllMatchingSearches(searchval) {
   let matchingResults = [];
-
+  let loadedSearchNames = Array.from(loadedSearchResults.keys());
   for (let i = 0; i < loadedSearchNames.length; i++) {
     let current = loadedSearchNames[i].toLowerCase();
     if (current.startsWith(searchval)) {
@@ -134,8 +132,90 @@ function ReturnAllMatchingSearches(searchval) {
   return matchingResults;
 }
 
-function LoadResults(searchResults) {
-  for (let result of searchResults) {
-    // Load with result
+function LoadResults(titles) {
+  const results = document.querySelector(".results");
+  results.innerHTML = "";
+  for (let title of titles) {
+    let result = loadedSearchResults.get(title);
+    LoadResult(
+      result["Title"],
+      result["Year"],
+      result["Type"],
+      result["Poster"]
+    );
+  }
+}
+
+function LoadResult(title, years, genre, img_src) {
+  const results = document.querySelector(".results");
+  const result = ` <div class="search-result-container">
+  <div class="result-img">
+    <img src="${img_src}" alt="" />
+  </div>
+  <div class="result-data-text">
+    <div class="result-name">${title}</div>
+    <div class="result-year">${years}</div>
+    <div class="result-genre">${genre}</div>
+  </div>
+  <div class="fav-btn-container material-icon-parent">
+    <span
+      onmouseenter="ToggleFavButton(this)"
+      onmouseleave="ToggleFavButton(this)"
+      class="material-icons-round"
+    >
+      favorite_border
+    </span>
+  </div>
+</div>`;
+  results.insertAdjacentHTML("beforeend", result);
+}
+
+// Loading Page
+
+document.addEventListener("DOMContentLoaded", function () {
+  const search_box = document.getElementById("search-box");
+  const categoryMenuItems = document.querySelector(".category-menu-items");
+  const search_results_container = document.querySelector(
+    ".search-results-container"
+  );
+  search_box.addEventListener("focus", (event) => {
+    categoryMenuItems.style.display = "none";
+    ChangeSearchContainerVisibility(event);
+  });
+
+  search_box.addEventListener("input", function (event) {
+    ChangeSearchContainerVisibility(event);
+    let matchingResults = ReturnAllMatchingSearches(event.target.value);
+    if (matchingResults.length > 0) {
+      LoadResults(matchingResults);
+    } else {
+      FetchData(event.target.value);
+    }
+  });
+
+  function ChangeSearchContainerVisibility(event) {
+    if (event.target.value.length > 1) {
+      search_results_container.style.display = "block";
+    } else {
+      search_results_container.style.display = "none";
+    }
+  }
+  document.addEventListener("click", function (event) {
+    if (
+      !search_box.contains(event.target) &&
+      !search_results_container.contains(event.target)
+    ) {
+      search_results_container.style.display = "none";
+    }
+  });
+});
+
+function ToggleFavButton(target) {
+  if (target.textContent.includes("favorite_border")) {
+    target.textContent = "favorite";
+    target.style.color = "#fc0339";
+  } else {
+    target.textContent = "favorite_border";
+    target.style.color = "grey";
   }
 }
