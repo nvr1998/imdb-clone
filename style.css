@@ -253,6 +253,10 @@ body {
 }
 .fav-btn-container {
   padding: 0 1.5rem;
+  border-radius: 0.3rem;
+}
+.fav-btn-container:hover {
+  background-color: rgb(21, 21, 21);
 }
 .fav-btn-container span {
   font-size: 2rem;

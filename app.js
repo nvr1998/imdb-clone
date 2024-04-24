@@ -147,6 +147,8 @@ function LoadResults(titles) {
   }
 }
 
+let my_favourites = new Set();
+
 function LoadResult(title, years, genre, img_src, imdbID) {
   if (img_src.includes("N/A")) {
     img_src = "";
@@ -161,16 +163,23 @@ function LoadResult(title, years, genre, img_src, imdbID) {
     <div class="result-year">${years}</div>
     <div class="result-genre">${genre}</div>
   </div>
-  <div class="fav-btn-container material-icon-parent">
+  <div onclick="ToggleFavButtonClicked(this,'${imdbID}')" data-id="${imdbID}" id="fav-button-${imdbID}" class="fav-btn-container material-icon-parent">
     <span
-      onmouseenter="ToggleFavButton(this)"
-      onmouseleave="ToggleFavButton(this)"
+      onmouseenter="ToggleFavButtonHover(this)"
+      onmouseleave="ToggleFavButtonHover(this)"
       class="material-icons-round"
     >
       favorite_border
     </span>
   </div>
 </div>`;
+
+  setTimeout(() => {
+    const fav_button = document.getElementById("fav-button-" + imdbID);
+    console.log("Trying to get element by ID " + "fav-button-" + imdbID);
+    SetFavButtonStatus(fav_button, imdbID);
+  }, 100);
+
   results.insertAdjacentHTML("beforeend", result);
 }
 
@@ -214,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-function ToggleFavButton(target) {
+function ToggleFavButtonHover(target) {
   if (target.textContent.includes("favorite_border")) {
     target.textContent = "favorite";
     target.style.color = "#fc0339";
@@ -222,6 +231,28 @@ function ToggleFavButton(target) {
     target.textContent = "favorite_border";
     target.style.color = "grey";
   }
+}
+
+function SetFavButtonStatus(target, imdbID) {
+  let status = my_favourites.has(imdbID);
+  if (status) {
+    target.querySelector("span").textContent = "favorite";
+    target.querySelector("span").style.color = "#fc0339";
+  } else {
+    target.querySelector("span").textContent = "favorite_border";
+    target.querySelector("span").style.color = "grey";
+  }
+}
+
+function ToggleFavButtonClicked(target, imdbID) {
+  console.log(imdbID);
+  if (my_favourites.has(imdbID)) {
+    my_favourites.delete(imdbID);
+  } else {
+    my_favourites.add(imdbID);
+  }
+  let id = target.dataset.id;
+  SetFavButtonStatus(target, id);
 }
 
 function LoadTitlePage(target) {
