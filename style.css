@@ -152,10 +152,18 @@ body {
 }
 
 .search-results-container {
-  width: 10rem;
-  height: 10rem;
-  background-color: red;
+  background-color: rgb(43, 43, 43);
   position: absolute;
-  top: 0;
   z-index: 10;
+  border-radius: 0.3rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.3rem 0.7rem;
+}
+.movie-result {
+  flex-grow: 1;
+  height: 2rem;
+  background-color: rgb(71, 71, 71);
 }

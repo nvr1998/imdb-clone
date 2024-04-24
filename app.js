@@ -32,7 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rect = reference.getBoundingClientRect();
 
     absoluteDiv.style.width = `${rect.width}px`;
-    absoluteDiv.style.height = `${rect.height}px`;
 
     absoluteDiv.style.top = `${rect.top + 55}px`;
     absoluteDiv.style.left = `${rect.left}px`;
@@ -40,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   matchSizeAndPosition(); // Run on initial load
 
-  // Optional: Re-run when the window is resized or scrolled
   window.addEventListener("resize", matchSizeAndPosition);
 });
 
