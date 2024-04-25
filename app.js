@@ -147,7 +147,18 @@ function LoadResults(titles) {
   }
 }
 
-let my_favourites = new Set();
+let my_favourites = load_myfavs();
+function save_myfavs() {
+  let arrayFromSet = Array.from(my_favourites);
+  localStorage.setItem("my_favs", JSON.stringify(arrayFromSet));
+}
+function load_myfavs() {
+  if (localStorage.getItem("my_favs")) {
+    return new Set(JSON.parse(localStorage.getItem("my_favs")));
+  } else {
+    return new Set();
+  }
+}
 
 function LoadResult(title, years, genre, img_src, imdbID) {
   if (img_src.includes("N/A")) {
@@ -163,10 +174,8 @@ function LoadResult(title, years, genre, img_src, imdbID) {
     <div class="result-year">${years}</div>
     <div class="result-genre">${genre}</div>
   </div>
-  <div onclick="ToggleFavButtonClicked(this,'${imdbID}')" data-id="${imdbID}" id="fav-button-${imdbID}" class="fav-btn-container material-icon-parent">
+  <div onclick="ToggleFavButtonClicked(this,event,'${imdbID}')" data-id="${imdbID}" id="fav-button-${imdbID}" class="fav-btn-container material-icon-parent">
     <span
-      onmouseenter="ToggleFavButtonHover(this)"
-      onmouseleave="ToggleFavButtonHover(this)"
       class="material-icons-round"
     >
       favorite_border
@@ -176,9 +185,8 @@ function LoadResult(title, years, genre, img_src, imdbID) {
 
   setTimeout(() => {
     const fav_button = document.getElementById("fav-button-" + imdbID);
-    console.log("Trying to get element by ID " + "fav-button-" + imdbID);
     SetFavButtonStatus(fav_button, imdbID);
-  }, 100);
+  }, 10);
 
   results.insertAdjacentHTML("beforeend", result);
 }
@@ -244,7 +252,8 @@ function SetFavButtonStatus(target, imdbID) {
   }
 }
 
-function ToggleFavButtonClicked(target, imdbID) {
+function ToggleFavButtonClicked(target, event, imdbID) {
+  event.stopPropagation();
   console.log(imdbID);
   if (my_favourites.has(imdbID)) {
     my_favourites.delete(imdbID);
@@ -253,6 +262,7 @@ function ToggleFavButtonClicked(target, imdbID) {
   }
   let id = target.dataset.id;
   SetFavButtonStatus(target, id);
+  save_myfavs();
 }
 
 function LoadTitlePage(target) {
@@ -262,7 +272,6 @@ function LoadTitlePage(target) {
   );
   search_box.value = "";
   search_results_container.style.display = "none";
-
   console.log(`Loading Page With Title ${target.dataset.id}`);
   LoadMovieDetails(target.dataset.id);
 }
@@ -285,4 +294,88 @@ function LoadMovieDetails(imdbID) {
       console.log(data);
     })
     .catch((err) => {});
+}
+
+let preloadedTopPicksLists = {
+  "breaking-bad": {
+    name: "Breaking Bad",
+    poster: "breaking-bad.jpg",
+    rating: "9.5",
+    imdbID: "tt0903747",
+  },
+  "bettr-call-saul": {
+    name: "Better Call Saul",
+    poster: "better-call-saul.jpg",
+    rating: "9.0",
+    imdbID: "tt3032476",
+  },
+  "fall-out": {
+    name: "Fallout",
+    poster: "fall-out.jpg",
+    rating: "8.7",
+    imdbID: "tt12637874",
+  },
+  dune: {
+    name: "Dune",
+    poster: "dune.jpg",
+    rating: "8.0",
+    imdbID: "tt1160419",
+  },
+  "i-robot": {
+    name: "I, Robot",
+    poster: "i-robot.jpg",
+    rating: "7.1",
+    imdbID: "tt0343818",
+  },
+};
+let preloadedFanFavLists = {
+  "a-beautiful-mind": {
+    name: "A Beautiful Mind",
+    poster: "a-beatiful-mind.jpg",
+    rating: "8.2",
+    imdbID: "tt0268978",
+  },
+  inception: {
+    name: "Inception",
+    poster: "inception.jpg",
+    rating: "8.8",
+    imdbID: "tt1375666",
+  },
+  "batman-rises": {
+    name: "Batman-Rises",
+    poster: "batman-rises.jpg",
+    rating: "8.4",
+    imdbID: "tt1345836",
+  },
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+  Object.keys(preloadedTopPicksLists).forEach((key) => {
+    AddMovieInList(preloadedTopPicksLists, key, "top-pics-list");
+  });
+  Object.keys(preloadedFanFavLists).forEach((key) => {
+    AddMovieInList(preloadedFanFavLists, key, "fan-fav-list");
+  });
+});
+
+function AddMovieInList(preloaded, movie_id, sectionID) {
+  const movieName = preloaded[movie_id].name;
+  const movieRatings = preloaded[movie_id].rating;
+  const poster = preloaded[movie_id].poster;
+  const imdbID = preloaded[movie_id].imdbID;
+
+  const movie_list_container = document.querySelector(
+    `#${sectionID} .movie-list`
+  );
+  const movie_container = `<div data-id="${imdbID}" class="movie-container">
+  <div class="poster" style="background-image: url(${poster})"></div>
+  <div class="movie-details">
+    <h3 class="movie-name">${movieName}</h3>
+    <div class="movie-rating">
+      <span class="material-icons-round"> star </span>
+      <span id="movie-rating">${movieRatings}</span>
+    </div>
+  </div>
+</div>`;
+  movie_list_container.insertAdjacentHTML("beforeend", movie_container);
 }

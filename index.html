@@ -93,32 +93,22 @@
               <div class="loading-dot" id="loading-dot-3"></div>
             </div>
           </div>
-          <div class="results">
-            <div class="search-result-container">
-              <div class="result-img">
-                <img src="testPoster.jpg" alt="" />
-              </div>
-              <div class="result-data-text">
-                <div class="result-name">Breaking Bad</div>
-                <div class="result-year">2008 - 2013</div>
-                <div class="result-genre">Crime, Drama, Thriller</div>
-              </div>
-              <div class="fav-btn-container material-icon-parent">
-                <span
-                  onmouseenter="ToggleFavButton(this)"
-                  onmouseleave="ToggleFavButton(this)"
-                  class="material-icons-round"
-                >
-                  favorite_border
-                </span>
-              </div>
-            </div>
-          </div>
+          <div class="results"></div>
         </div>
       </div>
     </nav>
     <main>
-      <div class="page-1"></div>
+      <div class="page-1">
+        <!-- Top Picks -->
+        <section id="top-pics-list">
+          <div class="movie-list-heading"><h1>Top Picks</h1></div>
+          <div class="movie-list"></div>
+        </section>
+        <section id="fan-fav-list">
+          <div class="movie-list-heading"><h1>Fan Favourites</h1></div>
+          <div class="movie-list"></div>
+        </section>
+      </div>
       <div class="page-2"></div>
     </main>
     <script src="app.js"></script>
