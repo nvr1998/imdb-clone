@@ -368,9 +368,9 @@ function AddMovieInList(preloaded, movie_id, sectionID) {
     `#${sectionID} .movie-list`
   );
   const movie_container = `<div data-id="${imdbID}" class="movie-container">
-  <div class="poster" style="background-image: url(${poster})"></div>
+  <div onclick="LoadMovieDetails(this)" class="poster" style="background-image: url(${poster})"></div>
   <div class="movie-details">
-    <h3 class="movie-name">${movieName}</h3>
+    <h3 onclick="LoadMovieDetails(this)" class="movie-name">${movieName}</h3>
     <div class="movie-rating">
       <span class="material-icons-round"> star </span>
       <span id="movie-rating">${movieRatings}</span>
@@ -378,4 +378,11 @@ function AddMovieInList(preloaded, movie_id, sectionID) {
   </div>
 </div>`;
   movie_list_container.insertAdjacentHTML("beforeend", movie_container);
+}
+
+function LoadMovieDetails(target) {
+  currentState = "movie-details";
+  let requested_imbdId = target.closest(".movie-container").dataset.id;
+  console.log(`Requested for movie details ${requested_imbdId}`);
+  window.location.href = "movie-details.html";
 }
