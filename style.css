@@ -304,7 +304,7 @@ body {
 
 .movie-container {
   flex: 0 0 14rem;
-  height: 24rem;
+  height: 26rem;
   background-color: rgb(31, 31, 31);
   display: flex;
   flex-direction: column;
@@ -355,6 +355,29 @@ body {
 .movie-rating span:nth-child(2) {
   color: white;
   font-size: 1rem;
+}
+.remove-fav-btn {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  height: 2rem;
+  padding: 1rem;
+}
+.remove-fav-btn button {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  box-sizing: content-box;
+  cursor: pointer;
+  background-color: rgb(71, 71, 71);
+  border-style: none;
+  color: rgb(232, 0, 0);
+  font-size: 1rem;
+}
+.remove-fav-btn button:hover {
+  background-color: rgb(88, 88, 88);
 }
 
 .page-movie-details {

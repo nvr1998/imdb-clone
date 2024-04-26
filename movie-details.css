@@ -5,14 +5,127 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
+body {
+  background-color: rgb(26, 26, 26);
+  background-image: url("breaking-bad.jpg");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.blur-bg {
+  height: 100vh;
+  padding: 2rem;
+  background-color: rgba(32, 32, 32, 0.924);
+  backdrop-filter: blur(10px);
+}
+
+:root {
+  --website-theme: #f5c519;
+}
 
 .movie-details-container {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 2rem;
+
+  border-radius: 0.5rem;
+}
+.movie-details-container .top {
+  gap: 2rem;
+  display: flex;
+}
+.poster {
+  width: 14rem;
+  height: 20rem;
+  background-image: url("breaking-bad.jpg");
+  background-size: cover;
+  background-position: center;
+  border-radius: 0.5rem;
+  box-shadow: rgba(157, 157, 157, 0.16) 0px 3px 6px,
+    rgba(115, 115, 115, 0.23) 0px 3px 6px;
+
+  flex-shrink: 0;
 }
 
 .main-details {
   height: 20rem;
-  background-color: red;
+}
+.movie-name {
+  color: white;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.movie-run-time {
+  color: rgb(144, 144, 144) !important;
+}
+
+.movie-rating-container {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.movie-details-container span:nth-child(1) {
+  color: var(--website-theme);
+}
+.movie-details-container span:nth-child(2) {
+  color: rgb(255, 255, 255);
+}
+.plot {
+  margin-top: 1rem;
+  color: white;
+}
+
+/* Style for extra large devices (Large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .small {
+    display: none;
+  }
+  .large {
+    display: block;
+  }
+}
+
+/* Style for large devices (Desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .small {
+    display: none;
+  }
+  .large {
+    display: block;
+  }
+}
+
+/* Style for medium devices (Tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .small {
+    display: none;
+  }
+  .large {
+    display: block;
+  }
+}
+
+/* Style for small devices (Landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+  .small {
+    display: block;
+  }
+  .large {
+    display: none;
+  }
+}
+
+/* Style for extra small devices (Portrait phones, less than 576px) */
+@media (max-width: 575px) {
+  .small {
+    display: block;
+  }
+  .large {
+    display: none;
+  }
+  .poster {
+    width: 10rem;
+    height: 20rem;
+  }
 }
