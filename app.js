@@ -105,15 +105,21 @@ function FetchData(serchval) {
         UpdateResults(data);
       }
     })
-    .catch((err) => {});
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 let loadedSearchResults = new Map();
+let firstSearchResult = "";
 
 function UpdateResults(data) {
   loadedSearchResults.clear();
+  firstSearchResult = "";
   if (data["Response"] === "True") {
     const searchArray = data["Search"];
+    firstSearchResult =
+      data["Search"].length > 0 ? data["Search"][0]["imdbID"] : "";
     for (let result of searchArray) {
       loadedSearchResults.set(result["Title"], result);
     }
@@ -266,6 +272,26 @@ function ToggleFavButtonClicked(target, event, imdbID) {
   save_myfavs();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const search_box = document.getElementById("search-box");
+  search_box.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      SearchClicked();
+    }
+  });
+});
+
+function SearchClicked() {
+  const search_box = document.getElementById("search-box");
+  const search_results_container = document.querySelector(
+    ".search-results-container"
+  );
+  search_box.value = "";
+  search_results_container.style.display = "none";
+  if (firstSearchResult.length > 2) LoadMovieDetailsPage(firstSearchResult);
+}
+
 function LoadTitlePage(target) {
   const search_box = document.getElementById("search-box");
   const search_results_container = document.querySelector(
@@ -362,8 +388,10 @@ function AddMovieInList(preloaded, movie_id, sectionID) {
 }
 
 function LoadMovieDetailsPage(imdbID) {
-  localStorage.setItem("recent_saved_movie", imdbID);
-  window.location.href = "movie-details.html";
+  if (imdbID.length > 0) {
+    localStorage.setItem("recent_saved_movie", imdbID);
+    window.location.href = "movie-details.html";
+  }
 }
 
 function LoadMyFavPage() {
