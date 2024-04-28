@@ -1,4 +1,4 @@
-const api_url_data = "http://www.omdbapi.com/?apikey=";
+const api_url_data = "https://www.omdbapi.com/?apikey=";
 const api_key = "18aa86a";
 
 document.addEventListener("DOMContentLoaded", function () {

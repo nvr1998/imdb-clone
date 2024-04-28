@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   let recent_saved_movie = localStorage.getItem("recent_saved_movie");
   console.log("Loading " + recent_saved_movie);
-  const api_url_data = "http://www.omdbapi.com/?apikey=";
+  const api_url_data = "https://www.omdbapi.com/?apikey=";
   const api_key = "18aa86a";
   const searchParams = {
     i: recent_saved_movie,
