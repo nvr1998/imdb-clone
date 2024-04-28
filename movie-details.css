@@ -7,7 +7,6 @@
 }
 body {
   background-color: rgb(26, 26, 26);
-  background-image: url("breaking-bad.jpg");
   background-size: cover;
   background-position: center;
   overflow: hidden;
@@ -31,6 +30,10 @@ body {
 
   border-radius: 0.5rem;
 }
+.disabled {
+  display: none;
+}
+
 .movie-details-container .top {
   gap: 2rem;
   display: flex;

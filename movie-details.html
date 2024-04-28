@@ -16,17 +16,18 @@
   </head>
   <body>
     <div class="blur-bg">
-      <div class="movie-details-container">
+      <div class="movie-details-container disabled">
         <div class="top">
-          <div class="poster"></div>
+          <div class="poster" id="poster"></div>
           <div class="main-details">
-            <h1 class="movie-name">Breaking Bad</h1>
-            <span class="movie-run-time">128 mins </span>&nbsp;
+            <h1 class="movie-name" id="movie-name">Breaking Bad</h1>
+            <span class="movie-run-time" id="movie-run-time">128 mins </span
+            >&nbsp;
             <div class="movie-rating-container">
               <span class="material-icons-round"> star </span>
-              <span id="movie-rating">9.0</span>
+              <span id="movie-rating" id="movie-rating">9.0</span>
             </div>
-            <p class="plot large">
+            <p class="plot large" id="">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex,
               itaque quaerat, minima laboriosam modi culpa accusantium facilis
               non accusamus fugit dolores aut mollitia dignissimos. Ipsam
@@ -45,6 +46,6 @@
       </div>
     </div>
 
-    <script src="movie-details.css"></script>
+    <script src="movie-loader.js"></script>
   </body>
 </html>

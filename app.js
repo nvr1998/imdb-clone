@@ -148,6 +148,7 @@ function LoadResults(titles) {
 }
 
 let my_favourites = load_myfavs();
+
 function save_myfavs() {
   let arrayFromSet = Array.from(my_favourites);
   localStorage.setItem("my_favs", JSON.stringify(arrayFromSet));
@@ -273,27 +274,7 @@ function LoadTitlePage(target) {
   search_box.value = "";
   search_results_container.style.display = "none";
   console.log(`Loading Page With Title ${target.dataset.id}`);
-  LoadMovieDetails(target.dataset.id);
-}
-
-function LoadMovieDetails(imdbID) {
-  const testParams = {
-    i: imdbID,
-  };
-
-  const queryString = new URLSearchParams(testParams).toString();
-  const final_url = api_url_data + `${api_key}&${queryString}`;
-
-  fetch(final_url)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    })
-    .then((data) => {
-      console.log(data);
-    })
-    .catch((err) => {});
+  LoadMovieDetailsPage(target.dataset.id);
 }
 
 let preloadedTopPicksLists = {
@@ -368,9 +349,9 @@ function AddMovieInList(preloaded, movie_id, sectionID) {
     `#${sectionID} .movie-list`
   );
   const movie_container = `<div data-id="${imdbID}" class="movie-container">
-  <div onclick="LoadMovieDetails(this)" class="poster" style="background-image: url(${poster})"></div>
+  <div onclick="LoadMovieDetailsPage('${imdbID}')" class="poster" style="background-image: url(${poster})"></div>
   <div class="movie-details">
-    <h3 onclick="LoadMovieDetails(this)" class="movie-name">${movieName}</h3>
+    <h3 onclick="LoadMovieDetailsPage('${imdbID}')" class="movie-name">${movieName}</h3>
     <div class="movie-rating">
       <span class="material-icons-round"> star </span>
       <span id="movie-rating">${movieRatings}</span>
@@ -380,9 +361,11 @@ function AddMovieInList(preloaded, movie_id, sectionID) {
   movie_list_container.insertAdjacentHTML("beforeend", movie_container);
 }
 
-function LoadMovieDetails(target) {
-  currentState = "movie-details";
-  let requested_imbdId = target.closest(".movie-container").dataset.id;
-  console.log(`Requested for movie details ${requested_imbdId}`);
+function LoadMovieDetailsPage(imdbID) {
+  localStorage.setItem("recent_saved_movie", imdbID);
   window.location.href = "movie-details.html";
+}
+
+function LoadMyFavPage() {
+  window.location.href = "favouries-page.html";
 }
