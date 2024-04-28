@@ -32,7 +32,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: left;
-  gap: 2rem;
+  gap: 1rem;
   position: relative;
 }
 
@@ -58,7 +58,7 @@ body {
   padding-bottom: 0.5rem;
   width: 100%;
   display: flex;
-  gap: 2rem;
+  gap: 1rem;
   flex-grow: 1;
   cursor: pointer;
 }
@@ -138,9 +138,9 @@ body {
 .my-fav-container {
   flex-grow: 1;
   display: flex;
-  flex-direction: row-reverse;
+  justify-content: end;
   align-items: center;
-  height: 2.2rem;
+  height: 2.3rem;
 }
 #my-fav-btn {
   height: 100%;
@@ -152,6 +152,7 @@ body {
   border-style: none;
   color: var(--website-theme);
   background-color: rgb(56, 56, 56);
+
   cursor: pointer;
 }
 
@@ -394,5 +395,90 @@ body {
   display: none;
   width: 100vw;
   height: 100vh;
-  background-color: red;
+}
+
+/* Style for extra large devices (Large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  #my-fav-text {
+    display: inline;
+  }
+}
+
+/* Style for large devices (Desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199px) {
+  #my-fav-text {
+    display: inline;
+  }
+}
+
+/* Style for medium devices (Tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991px) {
+  #my-fav-text {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+}
+
+/* Style for small devices (Landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767px) {
+  #my-fav-text {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  #category-options-button {
+    display: none;
+  }
+  .search-bar {
+    width: 100vw;
+  }
+  #search-btn {
+    display: none;
+  }
+  .nav-bar {
+    padding: 2rem 0.4rem;
+  }
+  .result-img {
+    display: none;
+  }
+  .result-data-text {
+    font-size: 0.8rem;
+  }
+  .fav-btn-container span {
+    font-size: 1rem;
+  }
+}
+
+/* Style for extra small devices (Portrait phones, less than 576px) */
+@media (max-width: 575px) {
+  #my-fav-text {
+    display: none;
+  }
+  .logo {
+    display: none;
+  }
+  #category-options-button {
+    display: none;
+  }
+  .search-bar {
+    width: 100vw;
+  }
+  #search-btn {
+    display: none;
+  }
+  .nav-bar {
+    padding: 2rem 0.4rem;
+  }
+  .result-img {
+    display: none;
+  }
+  .result-data-text {
+    font-size: 0.8rem;
+  }
+  .fav-btn-container span {
+    font-size: 1rem;
+  }
 }
