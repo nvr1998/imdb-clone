@@ -144,13 +144,21 @@ function LoadResults(titles) {
   for (let title of titles) {
     let result = loadedSearchResults.get(title);
     LoadResult(
-      result["Title"],
+      ShortenTitle(result["Title"]),
       result["Year"],
       result["Type"],
       result["Poster"],
       result["imdbID"]
     );
   }
+}
+
+function ShortenTitle(title) {
+  let titleTrimmed = title.split(" ");
+  if (titleTrimmed.length > 3) {
+    titleTrimmed = titleTrimmed.splice(0, 3) + "....";
+  }
+  return titleTrimmed;
 }
 
 let my_favourites = load_myfavs();

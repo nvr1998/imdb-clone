@@ -53,9 +53,9 @@ function LoadMovie(movieData) {
   const movie_list_parent = document.querySelector(".movie-list");
 
   const movie_box = `<div  data-id="${movieData["imdbID"]}" class="movie-container">
-  <div onclick="LoadMovieDetailsPage('${movieData["imdbRating"]}')" class="poster" style="background-image: url(${movieData["Poster"]})"></div>
+  <div onclick="LoadMovieDetailsPage('${movieData["imdbID"]}')" class="poster" style="background-image: url(${movieData["Poster"]})"></div>
   <div class="movie-details">
-    <h3 onclick="LoadMovieDetailsPage('${movieData["imdbRating"]}')" class="movie-name">${movieData["Title"]}</h3>
+    <h3 onclick="LoadMovieDetailsPage('${movieData["imdbID"]}')" class="movie-name">${movieData["Title"]}</h3>
     <div class="movie-rating">
       <span class="material-icons-round"> star </span>
       <span id="movie-rating">${movieData["imdbRating"]}</span>
